@@ -79,8 +79,14 @@
                     }
                     $this.css({height: highestColumn(columns) + 'px'});
                 };
-
-            $this.imagesLoaded(render);
+            
+            // waiting for images to be loaded is not necessary if each image
+            // or image container has a known height so I make it optional
+            if (options.imagesLoaded) {
+                $this.imagesLoaded(render);
+            } else {
+                render();
+            }
             if (options.resizable) {
                 var resize =  $(window).bind("resize", render);
                 $this.on('remove', resize.unbind);
